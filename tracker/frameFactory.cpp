@@ -1,0 +1,143 @@
+#include "frameFactory.h"
+#include "extractSurface.h"
+#include "ioManager.h"
+#include "vector2f.h"
+#include "SDL/SDL_rotozoom.h"
+#include <iostream>
+#include <sstream>
+//using namespace std;
+FrameFactory::~FrameFactory() {
+  for(std::map<std::string, Frame*> ::const_iterator itr=frames.begin();itr!=frames.end();itr++)
+  delete itr->second;
+   for(std::map<std::string, std::vector<Frame*> > ::const_iterator itr2=multiFrames.begin();itr2!=multiFrames.end();itr2++)
+  {
+for(std::vector<Frame*> ::const_iterator itr21=(itr2->second).begin();itr21!=itr2->second.end();itr21++)
+delete *itr21;
+}
+ for(std::map<std::string, SDL_Surface*> ::const_iterator itr3=surfaces.begin();itr3!=surfaces.end();itr3++)
+  SDL_FreeSurface(itr3->second);
+ for(std::map<std::string, std::vector<SDL_Surface*> >::const_iterator itr4= multiSurfaces.begin();itr4!= multiSurfaces.end();itr4++)
+{
+ for(std::vector<SDL_Surface*> ::const_iterator itr41=(itr4->second).begin();itr41!=itr4->second.end();itr41++)
+SDL_FreeSurface(*itr41);
+}
+}
+
+FrameFactory& FrameFactory::getInstance() {
+  static FrameFactory factory;
+  return factory;
+}
+
+Frame* FrameFactory::getFrame(const std::string& name) {
+    std::map<std::string, Frame*>::const_iterator pos = frames.find(name); 
+  if ( pos == frames.end() ) {
+    SDL_Surface * const surface =
+      IOManager::getInstance().loadAndSet(
+          gdata.getXmlStr(name+"/file"),
+          gdata.getXmlBool(name+"/transparency"));
+    surfaces[name] = surface;
+    Frame * const frame =new Frame(name, surface);
+    frames[name] = frame;
+    return frame;
+  }
+  else {
+    return pos->second;
+  }
+}
+Frame* FrameFactory::getChunkFrame(const std::string& name,unsigned int chunk_width,unsigned int  chunk_height,float source_x,float source_y)
+{
+
+SDL_Surface * const surface =
+      IOManager::getInstance().loadAndSet(
+          gdata.getXmlStr(name+"/file"),
+          gdata.getXmlBool(name+"/transparency"));
+float val =(rand()*rand());
+std::string s;
+
+  std::stringstream ss;
+
+ss << val;
+  s = ss.str();
+surfaces[name+s] = surface;
+ss.clear();
+ss.str("");
+Frame * const frame =new Frame(surface, chunk_width, chunk_height,
+                  source_x, source_y
+                );
+val =(rand()*rand());
+
+ss << val;
+  s = ss.str();
+    frames[name+"chunk"+s] = frame;
+    return frame;
+  ss.clear();
+ss.str("");
+
+    
+  
+}
+
+Frame* FrameFactory::getScaledFrame(const std::string& name,float scale) {
+    std::map<std::string, Frame*>::const_iterator pos = frames.find(name); 
+  
+    SDL_Surface * surface =
+      IOManager::getInstance().loadAndSet(
+          gdata.getXmlStr(name+"/file"),
+          gdata.getXmlBool(name+"/transparency"));
+float val =(rand());
+std::string s;
+  std::stringstream ss;
+ss << val;
+  s = ss.str();
+
+  
+    SDL_Surface * ScaledSurface=rotozoomSurface(surface, 0, scale, SMOOTHING_ON);
+    surfaces[name+ss.str()] = surface;
+val =(rand());
+ss << val;
+s = ss.str();
+    surfaces[name+s+"scaled"] = ScaledSurface;
+    
+    Frame * const frame =new Frame(ScaledSurface, surface->w, surface->h,
+                   Gamedata::getInstance().getXmlInt(name+"/src/x"), 
+                   Gamedata::getInstance().getXmlInt(name+"/src/y"));
+val =(rand());
+ss << val;
+s = ss.str();
+    frames[name+s+"scaled"] = frame;
+    return frame;
+}
+
+std::vector<Frame*> FrameFactory::getFrames(const std::string& name) {
+  // First search map to see if we've already made it:
+  std::map<std::string, std::vector<Frame*> >::const_iterator 
+    pos = multiFrames.find(name); 
+  if ( pos != multiFrames.end() ) {
+    return pos->second;
+  }
+
+  // It wasn't in the map, so we have to make the vector of Frames:
+  SDL_Surface* surface = IOManager::
+     getInstance().loadAndSet(gdata.getXmlStr(name+"/file"), true);
+  unsigned numberOfFrames = gdata.getXmlInt(name+"/frames");
+  std::vector<Frame*> frames;
+  std::vector<SDL_Surface*> surfaces;
+  frames.reserve(numberOfFrames);
+  Uint16 srcX = gdata.getXmlInt(name+"/srcX");
+  Uint16 srcY = gdata.getXmlInt(name+"/srcY");
+  Uint16 width = gdata.getXmlInt(name+"/width");
+  Uint16 height = gdata.getXmlInt(name+"/height");
+
+  SDL_Surface* surf;
+  for (unsigned i = 0; i < numberOfFrames; ++i) {
+    unsigned frameX = i * width + srcX;
+   surf = ExtractSurface::getInstance().
+               get(surface, width, height, frameX, srcY); 
+    surfaces.push_back( surf );
+    frames.push_back( new Frame(name, surf) );
+  }
+  SDL_FreeSurface(surface);
+  multiSurfaces[name] = surfaces;
+  multiFrames[name] = frames;
+  return frames;
+}

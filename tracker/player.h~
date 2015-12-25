@@ -1,0 +1,51 @@
+#ifndef mainPlayer__H
+#define mainPlayer__H
+#include <string>
+#include <vector>
+#include "drawable.h"
+#include "twowayms.h"
+#include "bulletpool.h"
+class ExplodingSprite;
+class mainPlayer : public Twowayms
+{
+public:
+
+	static mainPlayer& getInstance();
+	virtual ~mainPlayer();
+
+	virtual void draw() const;
+	virtual void reset(float x,float y) const;
+	virtual void update(Uint32 ticks);
+	void Moveup();
+	void Movedown();
+	void Moveleft();
+	void Moveright();
+        void MoveOnlyup();
+	void MoveOnlydown();
+	void MoveOnlyleft();
+	void MoveOnlyright();
+	void Playerstop();
+        void shoot();//
+	int bulletListCount();
+	int freeListCount();
+	virtual bool collidedwithbees(const Drawable* obj) const;
+	virtual bool bulletscollidedWith(const Drawable* obj) const;
+        void explode();
+protected:
+
+	bool istop;
+	mainPlayer& operator=(const mainPlayer&);
+	void advanceFrame(Uint32 ticks);
+
+private:
+      
+	mainPlayer(const std::string&, const std::string&, const std::string&);
+	mainPlayer(const mainPlayer&);
+        float ct;
+	float spx,spy;
+        bulletpool bulletpl;//
+	float minSpeed;
+        CollisionStrategy* strategy;
+        ExplodingSprite* explosion;
+};
+#endif

@@ -1,0 +1,32 @@
+#ifndef bulletpool__H
+#define bulletpool__H
+
+#include <list>
+#include "bullet.h"
+#include "collisionStrategy.h"
+
+class bulletpool {
+public:
+  bulletpool(const std::string&);
+  bulletpool(const bulletpool&);
+  ~bulletpool();
+  void draw() const;
+  void update(Uint32 ticks);
+  void shoot(const Vector2f& pos, const Vector2f& vel);
+
+   int bulletCount() const { return bulletList.size(); }
+   int freeCount()  const { return freeList.size(); }
+  bool shooting() const { return bulletList.empty(); }
+  bool collidedWith(const Drawable* obj) const;
+ void setFlagD(bool val){ dflag=val;}
+private:
+  std::string name;
+  CollisionStrategy* strategy;
+  float frameInterval;
+  float timeSinceLastFrame;
+  mutable std::list<Bullet> bulletList;  // bulletpool is a list of Bullet
+  mutable std::list<Bullet> freeList; // For when a Bullet gets out of range
+  bool dflag;
+  bulletpool& operator=(const bulletpool&); // (Item 6)
+};
+#endif

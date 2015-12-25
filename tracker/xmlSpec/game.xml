@@ -1,0 +1,294 @@
+<?xml version = "1.0"?>
+<GameData>
+<!-- screenTitle is also used to identify you and your animation. 
+     So make sure to include your name as part of the screenTitle -->
+<screenTitle>Sneha kadam</screenTitle>
+<maxStringSize>50</maxStringSize>
+<numdrops>40</numdrops>
+<numbutterflies>10</numbutterflies>
+<numbees>15</numbees>
+<frameCap>60</frameCap>
+<framesAreCapped>true</framesAreCapped>
+<frameMax>300</frameMax>
+<username>skadam</username>
+<drops>
+  <file>images/falling_sprite2.png</file>
+  <cushion>1</cushion>
+  <scale min="0.5" max="1.0"/>
+  <src x="0" y="0"/>
+  <width>35</width>
+  <height>40</height>
+  <loc x="0" y="0"/>
+  <speed x="100" y="100"/>
+  <transparency>false</transparency>
+</drops>
+<hbar>
+<locX>250</locX>
+<locY>70</locY>
+<totalLength>200</totalLength>
+<thickness>14</thickness>
+<increments>25</increments>
+<interval>1000</interval>
+</hbar>
+<bullet>
+<file>images/bullet.png</file>
+<width>30</width>
+<height>30</height>
+<speedX>300</speedX>
+<speedY>300</speedY>
+<transparency>true</transparency>
+<bulletInterval>100</bulletInterval>
+<distance>500</distance>
+</bullet>
+
+<hud>
+    <width>200</width>
+    <height>255</height>
+    <loc x="10" y="10"/>
+     <time>3</time>
+  </hud>
+<ghud>
+<width>200</width>
+    <height>200</height>
+    <loc x="325" y="150"/>
+     <time>3</time>
+</ghud>
+<view>
+  <width>854</width>
+  <height>480</height>
+</view>
+
+<world>
+  <width>3000</width>
+  <height>480</height>
+</world>
+
+<clock>
+  <locX>10</locX>
+  <locY>10</locY>
+</clock>
+
+
+<back1>
+  <file>images/bk3.png</file>
+  <factor>1</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>854</width>
+  <height>480</height>
+  <transparency>false</transparency>
+</back1>
+<back2>
+  <file>images/bk2.png</file>
+  <factor>2</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>854</width>
+  <height>480</height>
+  <transparency>false</transparency>
+</back2>
+<back3>
+  <file>images/bk1.png</file>
+  <factor>3</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>854</width>
+  <height>480</height>
+  <transparency>false</transparency>
+</back3>
+
+<font name="font">
+  <file>font/dyslexic-bold.otf</file>
+  <size>16</size>
+  <red>0</red>
+  <green>0</green>
+  <blue>0</blue>
+  <unused>0</unused>
+</font>
+ <butterfly>
+<file>images/butterfly.png</file>
+    <startLoc x="100" y="50"/>
+    <frames>10</frames>
+    <frameInterval>50</frameInterval>
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>50</width>
+    <height>42</height>
+    <speedX>250</speedX>
+    <speedY>170</speedY>
+    <transparency>true</transparency>
+<chunk>
+        <file>images/butterfly.png</file>
+	<size>9</size>
+	<startLoc x="100" y="275"/>
+    <frames>4</frames>
+    <frameInterval>50</frameInterval>
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>63</width>
+    <height>59</height>
+    <speedX>250</speedX>
+    <speedY>250</speedY>
+    <transparency>true</transparency>
+	<distance>200</distance>
+   </chunk>
+  </butterfly>
+
+  <butterfly1>
+    <file>images/butterfly.png</file>
+    <startLoc x="0" y="0"/>
+
+    <frames>10</frames>
+    <frameInterval>10</frameInterval>
+
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>50</width>
+    <height>50</height>
+    <speedX>0</speedX>
+    <speedY>0</speedY>
+    <transparency>true</transparency>
+  </butterfly1>
+
+  <butterfly2>
+    <file>images/butterfly.png</file>
+    <startLoc x="0" y="0"/>
+
+    <frames>10</frames>
+    <frameInterval>10</frameInterval>
+
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>50</width>
+    <height>50</height>
+    <speedX>0</speedX>
+    <speedY>0</speedY>
+    <transparency>true</transparency>
+  </butterfly2>
+
+
+<player>
+<file>images/BirdLeft.png</file>
+    <startLoc x="100" y="275"/>
+    <frames>4</frames>
+    <frameInterval>50</frameInterval>
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>63</width>
+    <height>59</height>
+    <speedX>250</speedX>
+    <speedY>250</speedY>
+    <transparency>true</transparency>
+    <bulletCount>25</bulletCount>
+    <chunk>
+        <file>images/BirdLeft.png</file>
+	<size>9</size>
+	<startLoc x="100" y="275"/>
+    <frames>4</frames>
+    <frameInterval>50</frameInterval>
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>63</width>
+    <height>59</height>
+    <speedX>250</speedX>
+    <speedY>250</speedY>
+    <transparency>true</transparency>
+	<distance>200</distance>
+   </chunk>
+  </player>
+
+  <playerLeft>
+   <file>images/BirdLeft.png</file>
+    <startLoc x="0" y="0"/>
+
+    <frames>4</frames>
+    <frameInterval>50</frameInterval>
+
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>63</width>
+    <height>59</height>
+    <speedX>0</speedX>
+    <speedY>0</speedY>
+    <transparency>true</transparency>
+  </playerLeft>
+
+  <playerRight>
+    <file>images/BirdRight.png</file>
+    <startLoc x="0" y="0"/>
+
+    <frames>4</frames>
+    <frameInterval>50</frameInterval>
+
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>63</width>
+    <height>62</height>
+    <speedX>0</speedX>
+    <speedY>0</speedY>
+    <transparency>true</transparency>
+  </playerRight>
+
+ <bee>
+<file>images/bee_right.png</file>
+    <startLoc x="100" y="50"/>
+    <frames>8</frames>
+    <frameInterval>50</frameInterval>
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>36</width>
+    <height>42</height>
+    <speedX>250</speedX>
+    <speedY>170</speedY>
+    <transparency>true</transparency>
+<chunk>
+        <file>images/bee_right.png</file>
+	<size>9</size>
+	<startLoc x="100" y="275"/>
+    <frames>4</frames>
+    <frameInterval>50</frameInterval>
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>63</width>
+    <height>59</height>
+    <speedX>250</speedX>
+    <speedY>250</speedY>
+    <transparency>true</transparency>
+	<distance>200</distance>
+   </chunk>
+  </bee>
+
+  <bee1>
+    <file>images/bee_right.png</file>
+    <startLoc x="0" y="0"/>
+
+    <frames>8</frames>
+    <frameInterval>50</frameInterval>
+
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>36</width>
+    <height>42</height>
+    <speedX>0</speedX>
+    <speedY>0</speedY>
+    <transparency>true</transparency>
+  </bee1>
+
+  <bee2>
+    <file>images/bee_left.png</file>
+    <startLoc x="0" y="0"/>
+
+    <frames>8</frames>
+    <frameInterval>50</frameInterval>
+
+    <srcX>0</srcX>
+    <srcY>0</srcY>
+    <width>36</width>
+    <height>42</height>
+    <speedX>0</speedX>
+    <speedY>0</speedY>
+    <transparency>true</transparency>
+  </bee2>
+
+
+</GameData>

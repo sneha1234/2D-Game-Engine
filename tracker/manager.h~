@@ -1,0 +1,53 @@
+#include <list>
+#include <vector>
+#include <SDL.h>
+#include "ioManager.h"
+#include "clock.h"
+#include "world.h"
+#include "viewport.h"
+#include "hud.h"
+#include "ghud.h"
+#include "drops.h"
+#include "Hbar.h"
+#include "explodingSprite.h"
+#include "twowayms.h"
+class Manager {
+public:
+  Manager ();
+  ~Manager ();
+  void play();
+  void switchSprite();
+  bool isReset;
+private:
+  const bool env;
+  void restart();
+  const IOManager& io;
+  Clock& clock;
+   int bcount;
+  SDL_Surface * const screen;
+  World world1,world2,world3;
+  Viewport& viewport;
+ void deletExp();
+  std::vector<Twowayms*> sprites;
+  std::vector<Twowayms*> killedBees;
+  std::vector<Twowayms*> explodingSprites;
+  std::vector<Twowayms*>::iterator currentSprite;
+ std::vector<drops*> drps;
+ Hbar healthbar;
+  bool makeVideo;
+  int frameCount;
+   hud& hd;
+ghud& ghd;
+  const std::string username;
+  const std::string title;
+  const int frameMax;
+  void draw();
+  void update();
+  void makedrops();
+  
+  Manager(const Manager&);
+  Manager& operator=(const Manager&);
+  void makeFrame();
+  bool gameover;
+ bool godmode;
+};

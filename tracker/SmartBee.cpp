@@ -1,0 +1,56 @@
+#include "SmartBee.h"
+#include "gamedata.h"
+#include "viewport.h"
+#include "frameFactory.h"
+#include "player.h"
+#include <cmath>
+#include "explodingSprite.h"
+SmartBee::SmartBee(const std::string& name, const std::string& name1, const std::string& name2)
+:Twowayms(name,name1,name2,true),currentMode(NORMAL) 
+{}
+SmartBee::SmartBee(const SmartBee& s)
+	:Twowayms(s),currentMode(NORMAL) 
+{
+
+}
+
+void SmartBee::draw() const {
+	Uint32 x = static_cast<Uint32>(X());
+	Uint32 y = static_cast<Uint32>(Y());
+	getframesonveln()[cFrame]->draw(x, y);
+}
+void SmartBee::goLeft()  { 
+  if (X() > 0) velocityX( -abs(velocityX()) ); 
+}
+void SmartBee::goRight() { velocityX( fabs(velocityX()) ); }
+void SmartBee::goUp()    { velocityY( -fabs(velocityY()) ); }
+void SmartBee::goDown()  { velocityY( fabs(velocityY()) ); }
+
+
+void SmartBee::update(Uint32 ticks) {
+	advanceFrame(ticks);
+Twowayms::update(ticks);
+  float x= X()+getFrame()->getWidth()/2;
+  float y= Y()+getFrame()->getHeight()/2;
+  float ex= mainPlayer::getInstance().X()+mainPlayer::getInstance().getFrame()->getWidth()/2;
+  float ey= mainPlayer::getInstance().Y()+mainPlayer::getInstance().getFrame()->getHeight()/2;
+  float distanceToEnemy = distance( x, y, ex, ey );
+  if  ( currentMode == NORMAL ) {
+    if(distanceToEnemy < safeDistance) currentMode = EVADE;
+  }
+  else if  ( currentMode == EVADE ) {
+    if(distanceToEnemy > safeDistance) currentMode=NORMAL;
+    else {
+      if ( x < ex ) goLeft();
+      if ( x > ex ) goRight();
+      if ( y < ey ) goUp();
+      if ( y > ey ) goDown();
+    }
+  }
+
+}
+float SmartBee::distance(float x1, float y1, float x2, float y2) {
+  float x = x1-x2;
+  float y = y1-y2;
+  return hypot(x, y);
+}
